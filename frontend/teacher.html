@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Instructor Dashboard</title>
+    <link rel="stylesheet" href="assets/dashboard.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div>
+            <div class="logo"><span>🔵</span> FaceTrack</div>
+            <div class="nav-links" id="sidebarNav">
+                <a href="#" class="nav-item active">Dashboard</a>
+                <div style="font-size: 0.8rem; color: #a3aed1; text-align: center; margin-top: 1rem;">Loading Classes...
+                </div>
+            </div>
+        </div>
+        <div style="background: #e0e5f9; padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <h4 style="color:#4318ff; margin-bottom: 0.5rem">Need Help?</h4>
+            <p style="font-size: 0.75rem; color: #a3aed1">Contact administration if you face issues managing classes.
+            </p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <input type="text" class="search-bar" placeholder="🔍 Search classes or logs...">
+            <div class="date-label" id="currentDateString">Loading Date...</div>
+        </header>
+
+        <section class="hero">
+            <div>
+                <h2 id="welcomeText">Welcome back!</h2>
+                <p style="margin-bottom: 1rem">New remote management metrics are fully available in your
+                    dashboard.<br>Log real-time attendance matrix data instantly.</p>
+                <button onclick="document.getElementById('classModal').style.display='flex'">Create Class</button>
+            </div>
+        </section>
+
+        <div>
+            <div class="section-title">
+                <h3>Active Classes</h3>
+                <a href="#">View All ></a>
+            </div>
+            <div class="classes-grid" id="classesList">
+                <!-- Javascript Injection via React-like dom builds -->
+                <div class="class-card grad-last">Loading Core Interfaces...</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="section-title">
+                <h3>Global Class Sessions</h3>
+                <a href="#">View All ></a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Recorded Date</th>
+                        <th>Present Ratio</th>
+                        <th>Missing Students</th>
+                        <th>Matrix Export</th>
+                    </tr>
+                </thead>
+                <tbody id="recentSessionsList">
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Syncing Data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="profile">
+            <!-- Using deterministic abstract avatars mapping nicely for mockups -->
+            <img src="https://ui-avatars.com/api/?name=Teacher&background=4318ff&color=fff&size=128" id="profileAvatar"
+                alt="Avatar">
+            <h3 id="profileName">Teacher Name</h3>
+            <p>Course Instructor</p>
+            <button onclick="logout()">Sign Out</button>
+        </div>
+
+        <div style="border: 1px solid #eee; border-radius: 16px; padding: 1rem;">
+            <!-- Placeholder highly themed mini calendar widget -->
+            <h4 style="text-align:center; color:#2d3436; margin-bottom: 1rem;" id="calLabel">Current Month</h4>
+            <div
+                style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; text-align:center; font-size: 0.8rem; color: #a3aed1">
+                <div>M</div>
+                <div>T</div>
+                <div>W</div>
+                <div>T</div>
+                <div>F</div>
+                <div>S</div>
+                <div>S</div>
+                <div style="color:#2d3436">18</div>
+                <div style="color:#2d3436">19</div>
+                <div style="color:#2d3436">20</div>
+                <div style="color:#2d3436">21</div>
+                <div style="color:#2d3436">22</div>
+                <div style="color:#2d3436">23</div>
+                <div style="color:#2d3436">24</div>
+                <div style="background:#4318ff; color:#fff; border-radius:50%">25</div>
+                <div style="color:#2d3436">26</div>
+                <div style="color:#2d3436">27</div>
+                <div style="color:#2d3436">28</div>
+                <div style="color:#2d3436">29</div>
+                <div style="color:#2d3436">30</div>
+                <div style="color:#a3aed1">1</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Modals -->
+    <div id="classModal" class="modal-overlay">
+        <div class="modal" style="position: relative;">
+            <button onclick="document.getElementById('classModal').style.display='none'"
+                style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: #a3aed1; font-size: 1.5rem; width: auto; padding: 0;">&times;</button>
+            <h3>Add Curriculum Class</h3>
+            <input type="text" id="newClassName" placeholder="e.g. Mathematics 101">
+            <button class="primary"
+                onclick="createClass(); document.getElementById('classModal').style.display='none'">Save
+                Classroom</button>
+            <button class="cancel" onclick="document.getElementById('classModal').style.display='none'">Reject
+                Defaults</button>
+        </div>
+    </div>
+
+    <div id="recordsModal" class="modal-overlay">
+        <div class="modal" style="width: 700px; max-width: 90%; position: relative;">
+            <button onclick="document.getElementById('recordsModal').style.display='none'"
+                style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: #a3aed1; font-size: 1.5rem; width: auto; padding: 0;">&times;</button>
+            <h3 id="recordModalTitle">Class Records</h3>
+            <p style="margin-bottom: 1rem;">Review internal system sessions across chronological checkpoints.</p>
+            <button class="primary" id="csvBtn" style="margin-bottom: 1.5rem">⬇ Secure Global Data to CSV
+                Matrix</button>
+            <table style="box-shadow: none; border: 1px solid #eee;">
+                <thead>
+                    <tr>
+                        <th>Checkpoint Target</th>
+                        <th>Acknowledged OK</th>
+                        <th>Missing/Absent</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTableBody"></tbody>
+            </table>
+            <button class="cancel" style="margin-top: 1rem;"
+                onclick="document.getElementById('recordsModal').style.display='none'">Terminate Inspection</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        document.getElementById('currentDateString').innerText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' });
+        initTeacherDashboard();
+    </script>
+</body>
+
+</html>

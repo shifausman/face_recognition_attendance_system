@@ -1,0 +1,13 @@
+# Node.js
+node_modules/
+backend/.env
+.npm/
+
+# Python
+vision_api/venv/
+vision_api/__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

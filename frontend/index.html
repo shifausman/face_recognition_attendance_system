@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Face Attendance - Login & Register</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Face Attendance Platform</h1>
+  </header>
+  <main>
+    <div class="glass-panel fade-in" style="max-width: 500px; width: 100%;">
+      <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+        <button class="btn" id="tabLogin" style="flex:1" onclick="switchTab('login')">Login</button>
+        <button class="btn btn-danger" id="tabReg"
+          style="flex:1; background: transparent; border: 1px solid var(--primary-glow)"
+          onclick="switchTab('reg')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <h2 style="margin-bottom: 1rem;">Sign In</h2>
+        <input type="text" id="l_user" name="username" placeholder="Username" autocomplete="username" required>
+        <input type="password" id="l_pass" name="password" placeholder="Password" autocomplete="current-password"
+          required>
+        <button type="submit" class="btn" style="width: 100%;">Login</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="regForm" style="display: none;">
+        <h2 style="margin-bottom: 1rem;">Register Account</h2>
+        <input type="text" id="r_user" name="reg_username" placeholder="Username" autocomplete="username" required>
+        <input type="password" id="r_pass" name="reg_password" placeholder="Password" autocomplete="new-password"
+          required>
+        <input type="text" id="r_name" placeholder="Full Name" required>
+        <select id="r_role" onchange="toggleCam()">
+          <option value="Student">Student (Requires Face Scan)</option>
+          <option value="Teacher">Teacher (Dashboard Access)</option>
+        </select>
+
+        <div id="camSection" style="margin-top: 1rem;">
+          <p style="color:var(--primary-glow); margin-bottom:0.5rem; font-size:0.9rem">Face Registry Preview</p>
+          <div class="cam-container"><video id="videoElement" autoplay playsinline></video></div>
+        </div>
+
+        <button type="submit" class="btn" id="regBtn" style="width: 100%; margin-top: 1rem;">Create Account</button>
+      </form>
+    </div>
+  </main>
+  <div class="toast" id="toast"></div>
+
+  <script src="assets/script.js"></script>
+  <script>
+    if (localStorage.getItem('user')) {
+      const u = JSON.parse(localStorage.getItem('user'));
+      window.location.href = u.role === 'Teacher' ? 'teacher.html' : 'student.html';
+    }
+  </script>
+</body>
+
+</html>

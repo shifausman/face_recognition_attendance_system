@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Live Class Session</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <header>
+        <h1 id="headerClassName">Active Session</h1>
+        <nav><a href="teacher.html" class="active">Back to Dashboard</a></nav>
+    </header>
+    <main>
+        <div class="glass-panel fade-in split-layout" style="max-width: 1200px; width: 100%;">
+            <div>
+                <h2 style="color: var(--primary-glow); margin-bottom: 1rem;">Scanner Feed</h2>
+                <div class="cam-container">
+                    <video id="videoElement" autoplay playsinline></video>
+                    <div class="cam-overlay"></div>
+                </div>
+                <button class="btn btn-danger" onclick="endSession()"
+                    style="width: 100%; font-size: 1.1rem; padding: 1rem;">End Class & Log Absentees</button>
+            </div>
+            <div>
+                <h2 style="margin-bottom: 1rem;">Live Attendance Tracker</h2>
+                <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 1rem; min-height: 400px;">
+                    <h3
+                        style="color: var(--text-muted); font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                        EXPECTED ROSTER (<span id="count">0</span>)</h3>
+                    <div id="rosterList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <!-- Roster Populated Here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="toast" id="toast"></div>
+
+    <!-- End Report Modal -->
+    <div id="reportModal" class="glass-panel"
+        style="display:none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); z-index: 1000; width: 600px; padding: 2rem;">
+        <h2 style="color: var(--primary-glow); margin-bottom: 1rem;">Session Final Report</h2>
+
+        <h3 style="color: var(--success); margin-bottom: 0.5rem;">Present Students</h3>
+        <div id="reportPresent" style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;"></div>
+
+        <h3 style="color: var(--danger); margin-bottom: 0.5rem;">Absent Students</h3>
+        <div id="reportAbsent" style="margin-bottom: 2rem; color: var(--text-muted); font-size: 0.9rem;"></div>
+
+        <button class="btn" onclick="location.href='teacher.html'" style="width: 100%;">Close & Return to
+            Dashboard</button>
+    </div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        startLiveSession();
+    </script>
+</body>
+
+</html>

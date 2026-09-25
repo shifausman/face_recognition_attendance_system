@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Student Portal</h1>
+        <nav><a href="#" onclick="logout()" class="active">Logout</a></nav>
+    </header>
+    <main>
+        <div class="glass-panel fade-in" style="max-width: 600px; text-align: center;">
+            <h2 id="welcomeText" style="color: var(--primary-glow); margin-bottom: 1rem;">Welcome Student</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+                Your facial signature has been actively registered.<br>
+                When your teachers start a live class, your attendance will be automatically captured from the scanner
+                without any further action required.
+            </p>
+
+            <div
+                style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); color: var(--success); padding: 1rem; border-radius: 12px; display: inline-block;">
+                ✓ Fully Setup & Ready
+            </div>
+        </div>
+    </main>
+    <div class="toast" id="toast"></div>
+
+    <script src="assets/script.js"></script>
+    <script>
+        const u = JSON.parse(localStorage.getItem('user'));
+        if (u) document.getElementById('welcomeText').innerText = `Welcome, ${u.name}!`;
+    </script>
+</body>
+
+</html>
