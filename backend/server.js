@@ -106,7 +106,27 @@ app.post('/api/attendance/log', async (req, res) => {
     try {
         const { sessionId, userId } = req.body;
         const session = await Session.findByIdAndUpdate(sessionId,
-            { $addToSet: { presentIds: userId } }, { new: true }).populate('presentIds', 'name');
+            { $addToSet: { presentIds: userId } }, { returnDocument: 'after' }).populate('presentIds', 'name');
+        res.json(session);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+});
+
+app.post('/api/sessions/:sessionId/mark-present', async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const session = await Session.findById(req.params.sessionId);
+        if (!session) return res.status(404).json({ error: "Session not found" });
+
+        // Add to present
+        if (!session.presentIds.includes(userId)) {
+            session.presentIds.push(userId);
+        }
+        // Remove from absentIds
+        session.absentIds = session.absentIds.filter(id => id.toString() !== userId);
+
+        await session.save();
         res.json(session);
     } catch (e) {
         res.status(400).json({ error: e.message });

@@ -222,7 +222,7 @@ async function openRecords(classId, className) {
             return `<tr>
                 <td style="font-weight: 500">${new Date(s.date).toLocaleString()}</td>
                 <td style="color: var(--success); font-size: 0.95rem; font-weight: bold; text-align: center;">${s.presentIds.length}</td>
-                <td style="color: var(--danger); font-size: 0.85rem">${absentList.map(a => a.name).join('<br>') || 'None'}</td>
+                <td style="color: var(--danger); font-size: 0.85rem">${absentList.map(a => `${a.name} <button class="btn" style="padding: 2px 6px; font-size: 0.7rem; margin-left: 10px; border-radius: 4px;" onclick="markManualPresent('${s._id}', '${a._id}', '${classId}', '${className.replace(/'/g, "\\'")}')">✓ Mark Present</button>`).join('<br><br>') || 'None'}</td>
             </tr>`;
         }).join('');
     }
@@ -371,4 +371,18 @@ async function endSession() {
     document.getElementById('reportAbsent').innerHTML = report.absentIds.map(u => `✗ ${u.name}`).join('<br>') || 'None';
 
     document.getElementById('reportModal').style.display = 'block';
+}
+
+async function markManualPresent(sessionId, userId, classId, className) {
+    try {
+        await fetch(`${NODE_API}/sessions/${sessionId}/mark-present`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId })
+        });
+        showToast("Student manually marked as present!");
+        openRecords(classId, className);
+    } catch (e) {
+        showToast(e.message, true);
+    }
 }
